@@ -1,0 +1,512 @@
+{
+  "name": "Formulario Elance",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "=https://docs.google.com/spreadsheets/d/1JUDby8gZP_NB9oePj_Il6_XLCeQpjRRyZihOZogGqmw/edit?gid=0#gid=0",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Página1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/19EM_TwoAQ2YBarI80hgPGt4l7dr354AAgSuTq1asJLA/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Nome": "={{ $json.Nome }}",
+            "Telefone": "={{ $json.Telefone.replace('', '').split('@')[0] }}",
+            "URL_SITE": "={{ $json.URL_SITE }}",
+            "Você já conhece algo sobre leilões?": "={{ $json['Você já conhece algo sobre leilões?'] }}",
+            "Seu interesse é mais para:": "={{ $json['Seu interesse é mais para:'] }}",
+            "Qual valor para investimento?": "={{ $json['Qual valor para investimento?'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Nome",
+              "displayName": "Nome",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Telefone",
+              "displayName": "Telefone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Você já conhece algo sobre leilões?",
+              "displayName": "Você já conhece algo sobre leilões?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Seu interesse é mais para:",
+              "displayName": "Seu interesse é mais para:",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Qual valor para investimento?",
+              "displayName": "Qual valor para investimento?",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "URL_SITE",
+              "displayName": "URL_SITE",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.6,
+      "position": [
+        -768,
+        48
+      ],
+      "id": "8c253365-785b-43cc-a5c6-21db0bbae2b7",
+      "name": "⬇️ Cadastra Lead",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "OTOqEkuktxrX46O6",
+          "name": "Sheet - Daniel"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "f828e40c-1a95-447d-8ed2-fbc560d4c8c5",
+              "name": "Nome",
+              "value": "={{ $json.body.name }}",
+              "type": "string"
+            },
+            {
+              "id": "09ba15b9-5d59-4f2a-a41d-9b1512a53ae1",
+              "name": "Telefone",
+              "value": "={{ $json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "799a249b-26b7-4d27-81dc-43606bbd4b90",
+              "name": "Você já conhece algo sobre leilões?",
+              "value": "={{ $json.body.quiz_data.knowledge }}",
+              "type": "string"
+            },
+            {
+              "id": "4b74675e-879a-4d4f-833a-cb0b9caed804",
+              "name": "URL_SITE",
+              "value": "={{ $json.body.source }}",
+              "type": "string"
+            },
+            {
+              "id": "75357699-fc16-4589-9099-6cbf11f88965",
+              "name": "Seu interesse é mais para:",
+              "value": "={{ $json.body.quiz_data.interest }}",
+              "type": "string"
+            },
+            {
+              "id": "81463b40-01a9-43f1-a909-9bcbf654e516",
+              "name": "Url_api",
+              "value": "https://api.2b.app.br",
+              "type": "string"
+            },
+            {
+              "id": "f5f26245-ed64-43d9-ba2c-effc7a8c4069",
+              "name": "apikey",
+              "value": "51CD67A04B0E-4978-A132-AAF980B99CB8",
+              "type": "string"
+            },
+            {
+              "id": "78f0436b-c665-4470-bdf6-ae98f4f6c884",
+              "name": "instancia",
+              "value": "Elance",
+              "type": "string"
+            },
+            {
+              "id": "1a9781ae-f5d2-4307-907c-caf7b6a24670",
+              "name": "Qual valor para investimento?",
+              "value": "={{ $json.body.quiz_data.investment }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1072,
+        48
+      ],
+      "id": "3e3f9581-877f-4990-ab9d-d62483692b3f",
+      "name": "⏩ Set_var"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "formelance",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1360,
+        48
+      ],
+      "id": "4466ee29-a2d0-4713-9f42-82b1c25bd91d",
+      "name": "🌐 Site-Land-Pro",
+      "webhookId": "463fbe85-5b20-47bb-9bb8-e86f9f45d5c6"
+    },
+    {
+      "parameters": {
+        "content": "# Recebe Site",
+        "height": 352,
+        "width": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1424,
+        -96
+      ],
+      "typeVersion": 1,
+      "id": "ecb85dce-3f01-436f-95ec-11e5e6b49833",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "# Separa",
+        "height": 352,
+        "width": 288,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1168,
+        -96
+      ],
+      "typeVersion": 1,
+      "id": "a9fbe71f-ed3a-4903-9cec-c0ace26f5afe",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "# Cad Planilha",
+        "height": 352,
+        "width": 288,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -880,
+        -96
+      ],
+      "typeVersion": 1,
+      "id": "80f05778-3b04-4662-8100-a3240df9f945",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "content": "# Envia Whats ",
+        "height": 512,
+        "width": 416,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -304,
+        -176
+      ],
+      "typeVersion": 1,
+      "id": "20b0fa7a-d44d-4ac0-92e1-f7060767dcf0",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $('⏩ Set_var').item.json.URL_SITE }}",
+                    "rightValue": "e-lance",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "7d34738d-2112-4356-b28b-d03efc32b4d4"
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Contato"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        -528,
+        48
+      ],
+      "id": "7f3f8d58-422b-4366-b31f-97469cb6a599",
+      "name": "Switch",
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "# FILTRO",
+        "height": 352,
+        "width": 288,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -592,
+        -96
+      ],
+      "typeVersion": 1,
+      "id": "fa92528c-96c9-4438-8417-2238cc1e645a",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('⏩ Set_var').item.json.Url_api }}/message/sendText/{{ $('⏩ Set_var').item.json.instancia }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "=apikey",
+              "value": "={{ $('⏩ Set_var').item.json.apikey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "=55{{ $('⏩ Set_var').item.json.Telefone }}@s.whatsapp.net"
+            },
+            {
+              "name": "text",
+              "value": "=Olá {{ $('⏩ Set_var').item.json.Nome }}! 👋\n\nRecebemos seu contato. \n\nPodemos continuar nossa conversa por aqui!"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -80,
+        48
+      ],
+      "id": "c15c0b48-8c03-4d28-b34a-fb8ac2e77750",
+      "name": "Cliente",
+      "retryOnFail": false,
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('⏩ Set_var').item.json.Url_api }}/message/sendText/{{ $('⏩ Set_var').item.json.instancia }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "apikey",
+              "value": "={{ $('⏩ Set_var').item.json.apikey }}"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "number",
+              "value": "=120363404779069824@g.us"
+            },
+            {
+              "name": "text",
+              "value": "=🤖 Novo Lead Chegou! 📢\n\nNome: {{ $('⏩ Set_var').item.json.Nome }}\n\nTelefone: https://wa.me/{{ $('⏩ Set_var').item.json.Telefone }}\n\n1- Você já conhece algo sobre leilões?\n{{ $('⏩ Set_var').item.json['Você já conhece algo sobre leilões?'] }}\n\n2- Qual valor para investimento?\n{{ $json['Qual valor para investimento?'] }}\n\n2- Seu interesse é mais para?\n{{ $('⏩ Set_var').item.json['Seu interesse é mais para:'] }}\n\nSite: {{ $('⏩ Set_var').item.json.URL_SITE }}\n"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -256,
+        48
+      ],
+      "id": "1ca8eee2-b636-4490-8f6e-bf666c2fb249",
+      "name": "Grupo Aviso",
+      "retryOnFail": false,
+      "alwaysOutputData": false
+    }
+  ],
+  "pinData": {
+    "🌐 Site-Land-Pro": [
+      {
+        "json": {
+          "headers": {
+            "host": "webhook.2b.app.br",
+            "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36",
+            "content-length": "270",
+            "accept": "*/*",
+            "accept-encoding": "gzip, deflate, br, zstd",
+            "accept-language": "pt-BR,pt;q=0.9,en-US;q=0.8,en;q=0.7",
+            "content-type": "application/json",
+            "origin": "http://localhost:3000",
+            "priority": "u=1, i",
+            "referer": "http://localhost:3000/",
+            "sec-ch-ua": "\"Google Chrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"",
+            "sec-ch-ua-mobile": "?0",
+            "sec-ch-ua-platform": "\"macOS\"",
+            "sec-fetch-dest": "empty",
+            "sec-fetch-mode": "cors",
+            "sec-fetch-site": "cross-site",
+            "x-forwarded-for": "191.13.159.116",
+            "x-forwarded-host": "webhook.2b.app.br",
+            "x-forwarded-port": "443",
+            "x-forwarded-proto": "https",
+            "x-forwarded-server": "0a34f71ae59a",
+            "x-real-ip": "191.13.159.116"
+          },
+          "params": {},
+          "query": {},
+          "body": {
+            "timestamp": "2025-12-23T14:14:33.193Z",
+            "name": "daniel",
+            "email": "email@email.com",
+            "phone": "12981145599",
+            "quiz_data": {
+              "knowledge": "Sei o básico, mas nunca participei",
+              "interest": "Investir ou arrematar imóveis",
+              "investment": "R$ 5.000 a R$ 20.000"
+            },
+            "source": "LP E-Lance"
+          },
+          "webhookUrl": "https://webhook.2b.app.br/webhook/formelance",
+          "executionMode": "production"
+        }
+      }
+    ]
+  },
+  "connections": {
+    "⬇️ Cadastra Lead": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "⏩ Set_var": {
+      "main": [
+        [
+          {
+            "node": "⬇️ Cadastra Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "🌐 Site-Land-Pro": {
+      "main": [
+        [
+          {
+            "node": "⏩ Set_var",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Grupo Aviso",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Grupo Aviso": {
+      "main": [
+        [
+          {
+            "node": "Cliente",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "5a81f067-ea39-47e8-bab0-af1e7ad7469b",
+  "meta": {
+    "instanceId": "1a1f959573fe07f65e3194d18e306c8ddbf2f4b0289d1778f9325d593185140e"
+  },
+  "id": "a3OjjETL78YmKaff",
+  "tags": []
+}

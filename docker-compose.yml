@@ -1,0 +1,59 @@
+version: "3.7"
+
+services:
+  # ─── Backend Express + Scheduler ──────────────────────────────────────────
+  backend:
+    image: elance-backend:latest
+    networks:
+      - 2net
+    environment:
+      - VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
+      - VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY}
+      - SUPABASE_URL=${VITE_SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+      - VITE_GEMINI_API_KEY=${VITE_GEMINI_API_KEY}
+      - EVOLUTION_GLOBAL_API_KEY=${EVOLUTION_GLOBAL_API_KEY}
+      - EVOLUTION_API_URL=${EVOLUTION_API_URL}
+      - EVOLUTION_INSTANCE=${EVOLUTION_INSTANCE}
+      - CRON_SECRET=${CRON_SECRET}
+      - REDIS_URL=redis://redis:6379
+      - NODE_ENV=production
+      - DISABLE_INTERNAL_SCHEDULER=true
+    deploy:
+      mode: replicated
+      replicas: 1
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.elance_web.rule=Host(`e-lance.com.br`) || Host(`www.e-lance.com.br`)
+        - traefik.http.routers.elance_web.entrypoints=websecure
+        - traefik.http.routers.elance_web.tls.certresolver=letsencryptresolver
+        - traefik.http.services.elance_web.loadbalancer.server.port=3010
+
+  # ─── Redis ───────────────────────────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    networks:
+      - 2net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+    deploy:
+      mode: replicated
+
+  # ─── Cron ────────────────────────────────────────────────────────────────
+  cron:
+    image: elance-backend:latest # Usa a imagem que o serviço 'backend' buildou
+    networks:
+      - 2net
+    command: ["node", "server/cron-runner.js"]
+    environment:
+      - VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
+      - SUPABASE_SERVICE_KEY=${SUPABASE_SERVICE_KEY}
+      - CRON_SECRET=${CRON_SECRET}
+      - REDIS_URL=redis://redis:6379
+      - BACKEND_INTERNAL_URL=http://backend:3010
+    deploy:
+      mode: replicated
+
+networks:
+  2net:
+    external: true
