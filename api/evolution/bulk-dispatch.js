@@ -63,7 +63,9 @@ export default async function handler(req, res) {
                     },
                     body: JSON.stringify({
                         number: "120363404779069824@g.us",
-                        text: groupText
+                        text: groupText,
+                        delay: 1500,
+                        linkPreview: false
                     })
                 });
 
