@@ -43,6 +43,8 @@ const Leads: React.FC = () => {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [viewMode, setViewMode] = useState<'list' | 'kanban'>('kanban');
+    const [selectedIds, setSelectedIds] = useState<string[]>([]);
+    const [isDispatching, setIsDispatching] = useState(false);
 
     // Modal State
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -184,6 +186,48 @@ const Leads: React.FC = () => {
             setCurrentLead({ ...currentLead, tags: [...currentTags, tag] });
         }
     };
+    
+    const toggleSelect = (id: string) => {
+        if (selectedIds.includes(id)) {
+            setSelectedIds(selectedIds.filter(i => i !== id));
+        } else {
+            setSelectedIds([...selectedIds, id]);
+        }
+    };
+
+    const toggleSelectAll = () => {
+        if (selectedIds.length === filteredLeads.length) {
+            setSelectedIds([]);
+        } else {
+            setSelectedIds(filteredLeads.map(l => l.id));
+        }
+    };
+
+    const handleBulkDispatch = async () => {
+        if (selectedIds.length === 0) return;
+        if (!confirm(`Deseja disparar notificações no WhatsApp para os ${selectedIds.length} leads selecionados?`)) return;
+
+        setIsDispatching(true);
+        try {
+            const response = await fetch('/api/evolution/bulk-dispatch', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ leadIds: selectedIds })
+            });
+
+            const result = await response.json();
+            if (result.success) {
+                alert(`Sucesso! ${result.results.success} leads processados. Verifique o grupo de WhatsApp.`);
+                setSelectedIds([]);
+            } else {
+                throw new Error(result.error || 'Erro ao processar disparo');
+            }
+        } catch (error: any) {
+            alert('Erro no disparo em massa: ' + error.message);
+        } finally {
+            setIsDispatching(false);
+        }
+    };
 
     const filteredLeads = leads.filter(l =>
         l.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -311,6 +355,15 @@ const Leads: React.FC = () => {
                             onChange={e => setSearchTerm(e.target.value)}
                         />
                     </div>
+                    {selectedIds.length > 0 && (
+                        <button
+                            onClick={handleBulkDispatch}
+                            disabled={isDispatching}
+                            className={`${isDispatching ? 'bg-amber-400' : 'bg-amber-500'} text-white px-4 py-2 rounded-xl flex items-center gap-2 hover:bg-amber-600 shadow-lg shadow-amber-200 transition-all whitespace-nowrap font-bold text-sm mr-2`}
+                        >
+                            {isDispatching ? 'Disparando...' : `Disparar WhatsApp (${selectedIds.length})`}
+                        </button>
+                    )}
                     <button
                         onClick={openNewModal}
                         className="bg-primary text-white px-4 py-2 rounded-xl flex items-center gap-2 hover:opacity-90 shadow-lg shadow-primary/20 transition-all whitespace-nowrap font-bold text-sm"
@@ -326,6 +379,14 @@ const Leads: React.FC = () => {
                     <table className="w-full text-left">
                         <thead className="bg-gray-50 border-b border-gray-100 sticky top-0">
                             <tr>
+                                <th className="p-4 w-10">
+                                    <input 
+                                        type="checkbox" 
+                                        className="rounded border-gray-300 text-primary focus:ring-primary"
+                                        checked={selectedIds.length === filteredLeads.length && filteredLeads.length > 0}
+                                        onChange={toggleSelectAll}
+                                    />
+                                </th>
                                 <th className="p-4 font-semibold text-gray-600">Nome</th>
                                 <th className="p-4 font-semibold text-gray-600">Contato</th>
                                 <th className="p-4 font-semibold text-gray-600">Status</th>
@@ -336,8 +397,17 @@ const Leads: React.FC = () => {
                         </thead>
                         <tbody className="divide-y divide-gray-100">
                             {filteredLeads.map((lead) => (
-                                <tr key={lead.id} className="hover:bg-gray-50 transition-colors">
+                                <tr key={lead.id} className={`hover:bg-gray-50 transition-colors ${selectedIds.includes(lead.id) ? 'bg-blue-50/50' : ''}`}>
                                     <td className="p-4">
+                                        <input 
+                                            type="checkbox" 
+                                            className="rounded border-gray-300 text-primary focus:ring-primary"
+                                            checked={selectedIds.includes(lead.id)}
+                                            onChange={() => toggleSelect(lead.id)}
+                                            onClick={(e) => e.stopPropagation()}
+                                        />
+                                    </td>
+                                    <td className="p-4 cursor-pointer" onClick={() => openEditModal(lead)}>
                                         <div className="font-medium text-gray-800">{lead.name}</div>
                                         <div className="text-xs text-gray-400">{new Date(lead.created_at).toLocaleDateString()}</div>
                                     </td>

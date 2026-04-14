@@ -5,6 +5,7 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import nodemailer from 'nodemailer';
 import evolutionWebhookHandler from '../api/evolution/webhook.js';
+import bulkDispatchHandler from '../api/evolution/bulk-dispatch.js';
 import { scrapeLatestAuctions } from './services/scraperService.js';
 import { generateAuctionNewsletter } from './services/aiMarketingService.js';
 import { supabase } from './lib/supabase.js';
@@ -492,6 +493,15 @@ app.post('/api/evolution/webhook', async (req, res) => {
         await evolutionWebhookHandler(req, res);
     } catch (error) {
         console.error('Error in evolution webhook locally:', error);
+        if (!res.headersSent) res.status(500).json({ error: error.message });
+    }
+});
+
+app.post('/api/evolution/bulk-dispatch', async (req, res) => {
+    try {
+        await bulkDispatchHandler(req, res);
+    } catch (error) {
+        console.error('Error in bulk dispatch locally:', error);
         if (!res.headersSent) res.status(500).json({ error: error.message });
     }
 });
