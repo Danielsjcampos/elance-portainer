@@ -64,8 +64,10 @@ export default async function handler(req, res) {
                         'apikey': API_KEY
                     },
                     body: JSON.stringify({
-                        number: `${fullPhone}@s.whatsapp.net`,
-                        text: `Olá ${name || ''}! 👋\n\nRecebemos seu contato.\n\nPodemos continuar nossa conversa por aqui!`
+                        number: fullPhone,
+                        text: `Olá ${name || ''}! 👋\n\nRecebemos seu contato.\n\nPodemos continuar nossa conversa por aqui!`,
+                        delay: 1200,
+                        linkPreview: false
                     })
                 });
 
@@ -99,7 +101,9 @@ export default async function handler(req, res) {
                     },
                     body: JSON.stringify({
                         number: "120363404779069824@g.us",
-                        text: groupText
+                        text: groupText,
+                        delay: 2000,
+                        linkPreview: false
                     })
                 });
 
