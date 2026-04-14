@@ -72,6 +72,13 @@ app.get('/api/debug/status', async (req, res) => {
         env: {
             NODE_ENV: process.env.NODE_ENV || 'development',
             SUPABASE_URL: (process.env.SUPABASE_URL || process.env.VITE_SUPABASE_URL || '').substring(0, 40) + '...',
+        },
+        evolution_api: {
+            configured: !!(process.env.EVOLUTION_API_URL && (process.env.EVOLUTION_GLOBAL_API_KEY || process.env.EVOLUTION_INSTANCE_TOKEN)),
+            url: process.env.EVOLUTION_API_URL || 'default (https://api.2b.app.br)',
+            instance: process.env.EVOLUTION_INSTANCE || 'Elance',
+            has_global_key: !!process.env.EVOLUTION_GLOBAL_API_KEY,
+            has_instance_token: !!process.env.EVOLUTION_INSTANCE_TOKEN
         }
     });
 });
