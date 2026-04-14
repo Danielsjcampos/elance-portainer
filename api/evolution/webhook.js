@@ -158,10 +158,24 @@ export default async function handler(req, res) {
             results.googleSheets = 'skipped (missing credentials)';
         }
 
-        return res.status(200).json({ success: true, results });
+        return res.status(200).json({ 
+            success: true, 
+            message: 'Webhook processed',
+            results,
+            debug: {
+                instance: INSTANCE,
+                apiUrl: API_URL,
+                hasKey: !!API_KEY
+            }
+        });
 
     } catch (error) {
-        console.error('Webhook processing error:', error);
-        return res.status(500).json({ error: 'Failed to process webhook', details: error.message });
+        console.error('❌ Webhook processing error:', error);
+        return res.status(500).json({ 
+            success: false, 
+            error: 'Failed to process webhook', 
+            details: error.message,
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+        });
     }
 }
