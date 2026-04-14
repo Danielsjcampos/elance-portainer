@@ -3,7 +3,7 @@ version: "3.7"
 services:
   # ─── Backend Express + Scheduler ──────────────────────────────────────────
   backend:
-    image: elance-backend:latest
+    image: ghcr.io/danielsjcampos/elance-portainer:latest
     networks:
       - 2net
     environment:
