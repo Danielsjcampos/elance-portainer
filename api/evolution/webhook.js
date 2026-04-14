@@ -69,9 +69,12 @@ export default async function handler(req, res) {
                     })
                 });
 
-                const welcomeData = await welcomeResponse.json();
+                const welcomeData = await welcomeResponse.json().catch(() => ({}));
                 results.welcomeMessage = welcomeResponse.ok ? 'success' : 'failed';
-                if (!welcomeResponse.ok) console.error('Error sending welcome message:', welcomeData);
+                if (!welcomeResponse.ok) {
+                    console.error('Error sending welcome message:', welcomeData);
+                    results.welcomeError = welcomeData;
+                }
             } catch (err) {
                 console.error('Failed to send welcome message:', err);
                 results.welcomeMessage = 'error';
@@ -110,6 +113,7 @@ export default async function handler(req, res) {
                         instance: INSTANCE,
                         apiKey: API_KEY ? 'Present' : 'Missing'
                     });
+                    results.groupError = groupData;
                 } else {
                     console.log('✅ Notification sent to WhatsApp group successfully.');
                 }
