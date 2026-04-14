@@ -9,8 +9,17 @@ interface RequirePermissionProps {
 }
 
 const RequirePermission: React.FC<RequirePermissionProps> = ({ permissionKey, children }) => {
-    // User requested to disable route protection (allow all modules).
-    // Visibility is controlled only by Sidebar hiding.
+    const { profile, isAdmin } = useAuth();
+
+    // Admins always have access
+    if (isAdmin) return <>{children}</>;
+
+    // Check granular permissions
+    // If the permission is explicitly set to false, deny access
+    if (profile?.permissions && profile.permissions[permissionKey] === false) {
+        return <AccessDenied />;
+    }
+
     return <>{children}</>;
 };
 
