@@ -9,7 +9,10 @@ interface RequirePermissionProps {
 }
 
 const RequirePermission: React.FC<RequirePermissionProps> = ({ permissionKey, children }) => {
-    const { profile, isAdmin } = useAuth();
+    const { profile, isAdmin, loading } = useAuth();
+
+    // While loading, don't show anything that might block the UI
+    if (loading) return null;
 
     // Admins always have access
     if (isAdmin) return <>{children}</>;

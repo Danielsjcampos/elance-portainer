@@ -29,8 +29,11 @@ export default async function handler(req, res) {
 
         if (error) throw error;
 
+        console.log(`[BulkDispatch] Found ${leads.length} leads in DB out of ${leadIds.length} requested IDs.`);
+
         const results = {
-            total: leads.length,
+            totalIds: leadIds.length,
+            totalFound: leads.length,
             success: 0,
             failed: 0,
             details: []
@@ -73,15 +76,18 @@ export default async function handler(req, res) {
                     results.success++;
                 } else {
                     const errorData = await response.json().catch(() => ({}));
+                    console.error(`[BulkDispatch] Failed to send lead ${lead.id}:`, errorData);
                     results.failed++;
                     results.details.push({ id: lead.id, error: errorData });
                 }
             } catch (err) {
+                console.error(`[BulkDispatch] Error processing lead ${lead.id}:`, err);
                 results.failed++;
                 results.details.push({ id: lead.id, error: err.message });
             }
         }
 
+        console.log(`[BulkDispatch] Finished. Success: ${results.success}, Failed: ${results.failed}`);
         return res.status(200).json({ success: true, results });
 
     } catch (error) {

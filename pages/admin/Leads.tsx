@@ -217,8 +217,13 @@ const Leads: React.FC = () => {
 
             const result = await response.json();
             if (result.success) {
-                alert(`Sucesso! ${result.results.success} leads processados. Verifique o grupo de WhatsApp.`);
-                setSelectedIds([]);
+                const { totalIds, totalFound, success } = result.results;
+                if (totalFound === 0) {
+                    alert('Nenhum lead correspondente foi encontrado no Banco de Dados. Verifique os IDs ou recarregue a página.');
+                } else {
+                    alert(`Disparo concluído! ${success} de ${totalFound} leads processados com sucesso.`);
+                    setSelectedIds([]);
+                }
             } else {
                 throw new Error(result.error || 'Erro ao processar disparo');
             }
