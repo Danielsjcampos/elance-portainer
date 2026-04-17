@@ -44,18 +44,19 @@ export const generateAuctionNewsletter = async (auctions, aiConfig, logoUrl) => 
            - 2ª Praça: "2ª Praça: VALOR - DATA". Destaque este conjunto.
            - Desconto: "X% de DESCONTO" em destaque verde.
            - Vendedor (Comitente): Mostre o nome do vendedor (campo "seller") logo abaixo do desconto.
-        3. DESIGN: 
+        3. DESIGN (COMPATIBILIDADE OUTLOOK): 
            - Use o cabeçalho azul marinho (#151d38) com a logo oficial: ${officialLogo}
-           - Adicione ícones sociais logo abaixo da logo (Site, WhatsApp, Instagram). Links fornecidos no contexto.
-           - Use cards em grid de 2 colunas para cada categoria.
-           - Botões de "VER LEILÃO" em azul marinho (#151d38) com design moderno e compatível com Outlook (use VML roundrect).
+           - Adicione ícones sociais logo abaixo da logo (Site, WhatsApp, Instagram).
+           - Use cards em grid de 2 colunas usando exclusivamente TABELAS (table).
+           - NÃO USE background-image para as fotos dos leilões. Use tags <img> tradicionais com largura definida.
+           - Botões de "VER LEILÃO" em azul marinho (#151d38). Use a técnica de botão "bulletproof" (background-color no TD e link ocupando o espaço).
            - O link do leilão deve estar no botão E TAMBÉM na imagem do imóvel.
            - Rodapé com contatos e link de descadastro.
-
-        REQUISITOS DE COMPATIBILIDADE (Outlook):
-        - IMPORTANTÍSSIMO: Para as imagens dos leilões, garanta que elas não fiquem esticadas. Se a foto for vertical, use um container de altura fixa (ex: 160px) e centralize a imagem (simulando object-fit: cover).
-        - Use tabelas (table-based layout).
-        - Não use border-radius ou box-shadow diretamente em divs/imgs (não funciona no Outlook), use VML se necessário para os botões.
+ 
+        REQUISITOS TÉCNICOS:
+        - Use apenas HTML inline CSS compatível com Outlook Desktop (Word Engine).
+        - Sem Flexbox, Sem Grid, Sem Border-Radius em divs (aplique no TD se necessário, sabendo que pode não aparecer no Outlook antigo).
+        - Use tabelas (table-based layout) para tudo.
         
         Modelo de Estrutura Sugerido:
         <div style="background: #eff0f1; padding: 20px; font-family: sans-serif;">

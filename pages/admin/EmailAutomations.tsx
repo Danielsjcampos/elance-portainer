@@ -208,22 +208,31 @@ const buildEmailHtml = (auctions: any[], tpl: typeof DEFAULT_TEMPLATE): string =
       <tr><td style="padding:0;position:relative;">
         <!-- Imagem banner -->
         <a href="${tpl.bannerCtaLink || tpl.siteUrl}" target="_blank" style="display:block;text-decoration:none;">
-          <div style="width:100%;min-height:220px;background:url('${tpl.bannerImageUrl}') center/cover no-repeat;position:relative;">
-            ${tpl.bannerOverlay ? `<div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,0.55) 0%,rgba(0,0,0,0.15) 60%,transparent 100%);"></div>` : ''}
-            ${(tpl.bannerTitle || tpl.bannerSubtitle || tpl.bannerCtaText) ? `
-            <table cellspacing="0" cellpadding="0" style="position:absolute;top:0;left:0;width:55%;height:100%;">
-              <tr><td valign="middle" style="padding:30px 20px 30px 30px;">
-                ${tpl.bannerTitle ? `<p style="margin:0 0 8px;font-size:26px;font-weight:900;color:#fff;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,0.4);">${tpl.bannerTitle}</p>` : ''}
-                ${tpl.bannerSubtitle ? `<p style="margin:0 0 18px;font-size:13px;color:rgba(255,255,255,0.85);line-height:1.4;">${tpl.bannerSubtitle}</p>` : ''}
-                ${tpl.bannerCtaText ? `
-                <table cellspacing="0" cellpadding="0"><tr>
-                  <td bgcolor="${tpl.accentColor}" style="border-radius:30px;padding:10px 24px;">
-                    <a href="${tpl.bannerCtaLink || tpl.siteUrl}" target="_blank" style="color:#fff;font-size:13px;font-weight:800;text-decoration:none;white-space:nowrap;">${tpl.bannerCtaText}</a>
-                  </td>
-                </tr></table>` : ''}
-              </td></tr>
-            </table>` : ''}
-          </div>
+          <table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+              <td align="center" style="background-color:#000000; position:relative;">
+                <img src="${tpl.bannerImageUrl}" width="600" style="width:100%; max-width:600px; display:block; border:0;" alt="Banner" />
+                ${tpl.bannerOverlay ? `<div style="position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.4);"></div>` : ''}
+                ${(tpl.bannerTitle || tpl.bannerSubtitle || tpl.bannerCtaText) ? `
+                <table width="100%" cellspacing="0" cellpadding="0" style="position:absolute;top:0;left:0;height:100%;">
+                  <tr>
+                    <td valign="middle" style="padding:20px 30px; text-align:left;">
+                      ${tpl.bannerTitle ? `<div style="font-size:24px; font-weight:bold; color:#ffffff; margin-bottom:10px; text-shadow: 0 1px 4px rgba(0,0,0,0.8);">${tpl.bannerTitle}</div>` : ''}
+                      ${tpl.bannerSubtitle ? `<div style="font-size:14px; color:#ffffff; margin-bottom:15px; opacity:0.9;">${tpl.bannerSubtitle}</div>` : ''}
+                      ${tpl.bannerCtaText ? `
+                      <table cellspacing="0" cellpadding="0" border="0">
+                        <tr>
+                          <td bgcolor="${tpl.accentColor}" style="padding:10px 20px; border-radius:4px;">
+                            <a href="${tpl.bannerCtaLink || tpl.siteUrl}" target="_blank" style="font-size:14px; color:#ffffff; font-weight:bold; text-decoration:none;">${tpl.bannerCtaText}</a>
+                          </td>
+                        </tr>
+                      </table>` : ''}
+                    </td>
+                  </tr>
+                </table>` : ''}
+              </td>
+            </tr>
+          </table>
         </a>
       </td></tr>
     </table>
@@ -278,9 +287,9 @@ const buildEmailHtml = (auctions: any[], tpl: typeof DEFAULT_TEMPLATE): string =
                 if (!auc) { body += `<td width="${colWidth}" style="padding:4px;">&nbsp;</td>`; continue; }
                 body += `<td width="${colWidth}" valign="top" style="padding:4px;">
                   <table width="100%" cellspacing="0" cellpadding="0" style="border:1px solid #e2e8f0;">
-                    <tr><td align="center" bgcolor="#f8fafc" style="height:${imgHeight}px;">
+                    <tr><td align="center" bgcolor="#f8fafc" style="height:${imgHeight}px; padding:0;">
                       <a href="${auc.link}" target="_blank" style="display:block;text-decoration:none;">
-                        <div style="width:100%;height:${imgHeight}px;background:url('${auc.image}') center/cover;">&nbsp;</div>
+                        <img src="${auc.image}" width="280" style="display:block; width:100%; max-width:100%; height:auto;" border="0" />
                       </a>
                     </td></tr>
                     <tr><td style="padding:${cols >= 3 ? '8px' : '12px'};">
@@ -290,8 +299,8 @@ const buildEmailHtml = (auctions: any[], tpl: typeof DEFAULT_TEMPLATE): string =
                       ${auc.discount > 0 ? `<p style="margin:3px 0 0;font-size:10px;color:#10b981;font-weight:700;">${auc.discount}% DESC.</p>` : ''}
                       <p style="margin:4px 0;"><span style="background:#f1f5f9;padding:2px 6px;font-size:9px;color:${tpl.headerColor};font-weight:800;text-transform:uppercase;">${auc.seller || 'E-Lance'}</span></p>
                       <table width="100%" cellspacing="0" cellpadding="0"><tr>
-                        <td align="center" bgcolor="${tpl.headerColor}" style="border-radius:6px;">
-                          <a href="${auc.link}" target="_blank" style="display:block;color:#fff;padding:${cols >= 3 ? '8px' : '11px'};text-decoration:none;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;">${tpl.ctaText}</a>
+                        <td align="center" bgcolor="${tpl.headerColor}" style="border-radius:4px;">
+                          <a href="${auc.link}" target="_blank" style="display:block; color:#ffffff; padding:10px; text-decoration:none; font-size:11px; font-weight:bold; letter-spacing:1px; background-color:${tpl.headerColor}; border-radius:4px;">${tpl.ctaText}</a>
                         </td>
                       </tr></table>
                     </td></tr>

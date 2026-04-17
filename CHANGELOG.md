@@ -12,6 +12,7 @@ Otimização do motor de busca de leilões e classificação automática intelig
 
 #### Melhorado
 - **Motor de Busca**: Aumentado o limite de captura de 600 para **3.000 anúncios** (100 páginas).
+- **Compatibilidade Outlook**: Refatoração completa do HTML estático e do prompt da IA para usar layouts baseados em tabelas (`table`), removendo `background-image`, `flexbox` e `border-radius` que quebravam no Outlook Desktop.
 - **Classificador Inteligente**: Nova lógica de categorização que agrupa automaticamente `carros`, `caminhões`, `motos`, `tratores` e `reboques` sob a categoria **Veículos**, e `terrenos`, `fazendas` e `imóveis rurais` sob a categoria **Imóveis**.
 - **Opção "Todos"**: Adicionada a opção de exibir **todos** os leilões capturados no informativo por e-mail, removendo o limite anterior de 12 itens.
 - **Configuração Padrão**: Categoria "Outros" agora vem habilitada por padrão no painel de automação.
