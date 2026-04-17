@@ -36,9 +36,9 @@ const DEFAULT_TEMPLATE = {
     instagramUrl: 'https://www.instagram.com/leiloeselance/',
     footer: '© 2026 E-Lance Leilões Brasil.\nAv. Duque de Caxias 18-29, Bauru-SP.',
     ctaText: 'VER LEILÃO',
-    maxItems: 8,
+    maxItems: 9999,
     columns: 2 as 1 | 2 | 3 | 4,
-    categories: { imoveis: true, veiculos: true, outros: false },
+    categories: { imoveis: true, veiculos: true, outros: true },
     // Banner de destaque
     bannerEnabled: false,
     bannerImageUrl: '',
@@ -678,7 +678,7 @@ const EmailAutomations: React.FC = () => {
 
                 <Field label="Número de Imóveis/Anúncios no E-mail">
                     <div style={{ display: 'flex', gap: 8 }}>
-                        {[4, 6, 8, 10, 12].map(n => (
+                        {[4, 6, 8, 10, 12, 9999].map(n => (
                             <button key={n} onClick={() => setTpl({ maxItems: n })}
                                 style={{
                                     flex: 1, padding: '9px 0', borderRadius: 8, fontWeight: 700, fontSize: 13,
@@ -686,7 +686,7 @@ const EmailAutomations: React.FC = () => {
                                     background: templateConfig.maxItems === n ? 'rgba(37,99,235,0.2)' : 'rgba(255,255,255,0.03)',
                                     color: templateConfig.maxItems === n ? '#93C5FD' : '#6B7280',
                                     cursor: 'pointer', fontFamily: "'Josefin Sans', sans-serif", transition: 'all 150ms'
-                                }}>{n}</button>
+                                }}>{n === 9999 ? 'Todos' : n}</button>
                         ))}
                     </div>
                 </Field>

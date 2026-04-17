@@ -5,6 +5,19 @@ Formato baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
 ---
 
+## [2.7.1] — 2026-04-17
+
+### 🔧 Melhorias no Raspador & Informativos
+Otimização do motor de busca de leilões e classificação automática inteligente.
+
+#### Melhorado
+- **Motor de Busca**: Aumentado o limite de captura de 600 para **3.000 anúncios** (100 páginas).
+- **Classificador Inteligente**: Nova lógica de categorização que agrupa automaticamente `carros`, `caminhões`, `motos`, `tratores` e `reboques` sob a categoria **Veículos**, e `terrenos`, `fazendas` e `imóveis rurais` sob a categoria **Imóveis**.
+- **Opção "Todos"**: Adicionada a opção de exibir **todos** os leilões capturados no informativo por e-mail, removendo o limite anterior de 12 itens.
+- **Configuração Padrão**: Categoria "Outros" agora vem habilitada por padrão no painel de automação.
+
+---
+
 ## [2.7.0] — 2026-04-09
 
 ### 🎨 Novo — Editor Visual de Templates de E-mail
